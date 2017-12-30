@@ -2,6 +2,7 @@ from LTM_MC import LTM_MC
 import numpy as np
 from cvn2tt import cvn2tt
 
+
 def DTA_MSA(nodes, links,origins,destinations, ODmatrix, dt, totT, rc_dt, maxIt, rc_agg):
     from allOrNothingTF import allOrNothingTF
 
@@ -19,6 +20,8 @@ def DTA_MSA(nodes, links,origins,destinations, ODmatrix, dt, totT, rc_dt, maxIt,
     #initialization
     totNodes = len(nodes.get('ID')) #<--row.
     totLinks = len(links.get('toNode'))
+    #destinations = np.squeeze(destinations,axis=0)-1
+    #origins = np.squeeze(origins,axis=0)-1
     totDest = len(destinations) #<--only 1 dimension, or len(destinations), if in form of a list.
 
     cvn_up = np.zeros((totLinks,totT+1, totDest))
@@ -40,7 +43,7 @@ def DTA_MSA(nodes, links,origins,destinations, ODmatrix, dt, totT, rc_dt, maxIt,
 
 
     import matplotlib.pyplot as plt
-    plt.figure()
+    # plt.figure()
     count = 0
     while it<maxIt and gap_dt>0.000001:
         it = it+1
@@ -53,6 +56,12 @@ def DTA_MSA(nodes, links,origins,destinations, ODmatrix, dt, totT, rc_dt, maxIt,
                         update = TF_new[n][t][d]-TF[n][t][d]
                         TF[n][t][d] = TF[n][t][d]-1/it*update
 
+
+        np.save('TF30.npy', TF)
+        np.save('dummy1_Debug30.npy', dummy1)
+        np.save('dummy2_Debug30.npy', dummy2)
+
+
         cvn_up, cvn_down =LTM_MC(nodes,links, origins, destinations, ODmatrix, dt, totT, TF)
 
         simTT = cvn2tt(np.sum(cvn_up,axis=2),np.sum(cvn_down, axis=2), dt,totT, links)
@@ -64,22 +73,22 @@ def DTA_MSA(nodes, links,origins,destinations, ODmatrix, dt, totT, rc_dt, maxIt,
         TODO: plot
         
         '''
-        timecount = time.clock()-start_time
-        a = plt.semilogy(timecount,gap_dt,'r.',label='gap based on simulation interval' )
-        b = plt.semilogy(timecount,gap_rc, 'ob',mfc='none',label= 'gap based on route choice interval')
-
-        if(count==0):
-            plt.legend()
-
-        plt.pause(0.01)
-        count=count+1
-
-        #print("Plotting here")
-
-    if it>maxIt:
-        print("Maximum Iteration limit reached: ", maxIt, "Gap: ", gap_dt)
-    else:
-        print("Convergence reached in iteration ", it, "Gap: ", gap_dt)
+    #     timecount = time.clock()-start_time
+    #     a = plt.semilogy(timecount,gap_dt,'r.',label='gap based on simulation interval' )
+    #     b = plt.semilogy(timecount,gap_rc, 'ob',mfc='none',label= 'gap based on route choice interval')
+    #
+    #     if(count==0):
+    #         plt.legend()
+    #
+    #     plt.pause(0.01)
+    #     count=count+1
+    #
+    #     #print("Plotting here")
+    #
+    # if it>maxIt:
+    #     print("Maximum Iteration limit reached: ", maxIt, "Gap: ", gap_dt)
+    # else:
+    #     print("Convergence reached in iteration ", it, "Gap: ", gap_dt)
 
     return cvn_up, cvn_down, TF
 #----after while------

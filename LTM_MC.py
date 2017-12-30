@@ -1,6 +1,8 @@
 from NodeModel import NodeModel
 import numpy as np
 import math
+import sys
+
 def LTM_MC(nodes, links, origins, destinations, ODmatrix, dt, totT, TF):
     eps = np.finfo(float).eps
     totLinks = len(links.get('fromNode'))
@@ -21,8 +23,8 @@ def LTM_MC(nodes, links, origins, destinations, ODmatrix, dt, totT, TF):
     originsAndDest = np.append(origins, destinations)
     normalNodes = np.setdiff1d(nodes.get('ID') - 1, originsAndDest)
 
-    # the problem is initialized ID as 1.2.3... not good.. so need subtract 1
 
+    #ODmatrix_out = TemporaryFile()
     def loadOriginNodes(t):
         for o_index in range(0, len(origins)):
             o = origins[o_index]
@@ -30,8 +32,19 @@ def LTM_MC(nodes, links, origins, destinations, ODmatrix, dt, totT, TF):
             for l_index in range(0, len(outgoingLinks)):
                 l = outgoingLinks[l_index]
                 for d_index in range(0, totDest):
-                    SF_d = TF[o, t - 1, d_index] * np.sum(ODmatrix[o_index, d_index, t - 1]) * dt
-                    cvn_up[l, t, d_index] = cvn_up[l, t - 1, d_index] + SF_d
+                    try:
+                        SF_d = TF[o, t - 1, d_index] * np.sum(ODmatrix[o_index, d_index, t - 1]) * dt
+                    except IndexError:
+                        np.save('o_LTM30.npy', o)
+                        np.save('t_LTM30.npy', t)
+                        np.save('d_index_LTM30.npy', d_index)
+                        np.save('o_index_LTM30.npy', o_index)
+                        np.save('ODmatrix_index_LTM30.npy', ODmatrix)
+                        np.save('TF_index_LTM30.npy', TF)
+                        sys.exit('debugging30')
+                        SF_d = TF[o, t - 1, d_index] * np.sum(ODmatrix[o_index, d_index, t - 1]) * dt
+                    finally:
+                        cvn_up[l, t, d_index] = cvn_up[l, t - 1, d_index] + SF_d
 
     def loadDestinationNodes(t):
         for d_index in range(0, len(destinations)):
