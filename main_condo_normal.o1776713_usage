@@ -1,0 +1,41 @@
+-- Job Summary -------------------------------------------------------
+Job Id: 1776713.pbsserver for user aval9278 in queue condo-civil
+Job Name: main_condo_normal
+Project: RDS-FEI-DTAMetroScan-RW
+Exit Status: 137
+Job run as chunks (hpc063:ncpus=1:mem=125829120kb)
+Walltime requested:   80:10:00 :      Walltime used:   16:05:56
+                               :   walltime percent:      20.1%
+-- Nodes Summary -----------------------------------------------------
+-- node hpc063 summary
+    Cpus requested:          1 :          Cpus Used:       1.00
+          Cpu Time:   16:04:18 :        Cpu percent:      99.8%
+     Mem requested:    120.0GB :           Mem used:    108.2GB
+                               :        Mem percent:      90.2%
+
+-- WARNINGS ----------------------------------------------------------
+
+** Job Exit status > 128.  This indicates that the job was killed for some
+** reason, please check the following:
+**   Did the job run out of time or memory?
+**   Was the job killed for some other reason?
+** 
+** Low Walltime utilisation.  While this may be normal, it may help to check the
+** following:
+**   Did the job parameters specify more walltime than necessary? Requesting
+**   lower walltime could help your job to start sooner.
+**   Did your analysis complete as expected or did it crash before completing?
+**   Did the application run more quickly than it should have? Is this analysis
+**   the one you intended to run?
+** 
+** High CPU utilisation on hpc063.  This is often normal, however you might want
+** to double-check if you need to request more cores or have misconfigured MPI
+** if your jobs ran slower than expected.  It might help to check the following:
+**   Did the job parameters specify enough cores? Requesting more cores could
+**   help your job run faster.
+**   Did you use MPI and was the work distributed correctly? Correcting this
+**   could make your job to run faster without needing any more cores.
+**   Did the application use more cores than it should have? Is this analysis
+**   the one you intended to run?
+**
+-- End of Job Summary ------------------------------------------------
