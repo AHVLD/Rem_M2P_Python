@@ -1,0 +1,14 @@
+/project/RDS-FEI-DTAMetroScan-RW/M2P/pyDebug/allOrNothingTF.py:69: RuntimeWarning: invalid value encountered in double_scalars
+  arr_map[endN[l], t2] - arr_map[endN[l], t1])
+/project/RDS-FEI-DTAMetroScan-RW/M2P/pyDebug/LTM_MC.py:21: RuntimeWarning: divide by zero encountered in true_divide
+  wSpeeds = capacities / (kJams - capacities / freeSpeeds)
+Traceback (most recent call last):
+  File "main_medium.py", line 60, in <module>
+    cvn_up,cvn_down, TF = DTA_MSA(nodes,links,origins,destinations,ODmatrix, dt, totT, rc_dt,max_It,rc_agg)
+  File "/project/RDS-FEI-DTAMetroScan-RW/M2P/pyDebug/DTA_MSA.py", line 65, in DTA_MSA
+    cvn_up, cvn_down =LTM_MC(nodes,links, origins, destinations, ODmatrix, dt, totT, TF)
+  File "/project/RDS-FEI-DTAMetroScan-RW/M2P/pyDebug/LTM_MC.py", line 112, in LTM_MC
+    loadOriginNodes(t)
+  File "/project/RDS-FEI-DTAMetroScan-RW/M2P/pyDebug/LTM_MC.py", line 47, in loadOriginNodes
+    cvn_up[l, t, d_index] = cvn_up[l, t - 1, d_index] + SF_d
+ValueError: setting an array element with a sequence.
